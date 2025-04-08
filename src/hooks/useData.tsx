@@ -1,9 +1,10 @@
 
-import { createContext, useContext, useState, ReactNode, useMemo } from 'react';
+import { createContext, useContext, useState, ReactNode, useMemo, useEffect } from 'react';
 import { DateRange, ProcessedActivity } from '@/types';
 import { parseCSV } from '@/utils/csvParser';
 import { toast } from '@/components/ui/use-toast';
 import { calculateDateRange, filterDataByDateRange } from '@/utils/dataTransformer';
+import { loadDataFromLocalStorage, appendDataToLocalStorage } from '@/utils/localStorage';
 
 interface DataContextProps {
   isLoading: boolean;
@@ -21,6 +22,25 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<ProcessedActivity[]>([]);
   const [dateRange, setDateRange] = useState<DateRange>({ from: undefined, to: undefined });
+
+   // Load data from localStorage on initial mount
+   useEffect(() => {
+    const storedData = loadDataFromLocalStorage();
+    if (storedData.length > 0) {
+      setData(storedData);
+      
+      // Set initial date range based on stored data
+      const [startDate, endDate] = calculateDateRange(storedData);
+      setDateRange({ from: startDate, to: endDate });
+      
+      toast({
+        title: "Data Loaded",
+        description: `Loaded ${storedData.length} activities from local storage`,
+      });
+    }
+  }, []);
+
+
   
   const fullDateRange = useMemo(() => {
     if (data.length === 0) return null;
@@ -46,19 +66,19 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
       
-      // Append to existing data or replace?
-      // For now, replace but could implement appending logic
-      setData(parsedData);
+     // Append to existing data (handles deduplication internally)
+      const updatedData = appendDataToLocalStorage(parsedData);
+      setData(updatedData);
       
       // Reset date range when new data is loaded
-      if (parsedData.length > 0) {
-        const [startDate, endDate] = calculateDateRange(parsedData);
+      if (updatedData.length > 0) {
+        const [startDate, endDate] = calculateDateRange(updatedData);
         setDateRange({ from: startDate, to: endDate });
       }
       
       toast({
         title: "Data Loaded",
-        description: `Successfully processed ${parsedData.length} activities`,
+        description: `Successfully processed ${parsedData.length} activities, total dataset: ${updatedData.length}`,
       });
     } catch (error) {
       console.error('Error uploading data:', error);

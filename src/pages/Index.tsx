@@ -1,7 +1,6 @@
 
 import { DataProvider } from '@/hooks/useData';
 import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
 import Dashboard from '@/components/layout/Dashboard';
 import { useState, useEffect } from 'react';
 
@@ -17,10 +16,9 @@ const Index = () => {
     <DataProvider>
       <div className={`min-h-screen flex flex-col ${mounted ? 'animate-fade-in' : 'opacity-0'}`}>
         <Header />
-        <main className="flex-grow">
+        <main className="flex-grow flex">
           <Dashboard />
         </main>
-        <Footer />
       </div>
     </DataProvider>
   );
