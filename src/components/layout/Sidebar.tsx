@@ -21,6 +21,7 @@ interface SidebarItem {
 }
 
 const chartItems: SidebarItem[] = [
+  { id: 'yp-view', name: 'YP View', icon: <PieChart size={18} /> },
   { id: 'email-domains', name: 'Email Domains', icon: <BarChart3 size={18} /> },
   { id: 'integration-activity', name: 'Integration Activity', icon: <LineChart size={18} /> },
   { id: 'manager-actions', name: 'Manager Actions', icon: <PieChart size={18} /> },

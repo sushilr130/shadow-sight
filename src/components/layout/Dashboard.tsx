@@ -26,6 +26,7 @@ import {
   DataLeakageByUserChart,
   HighRiskEmployeeChart
 } from '../charts/AdvancedCharts';
+import YPViewChart from '../charts/YPViewChart';
 
 export const Dashboard = () => {
   const { filteredData, data } = useData();
@@ -38,6 +39,8 @@ export const Dashboard = () => {
   // Render the selected chart component
   const renderSelectedChart = () => {
     switch (selectedChart) {
+      case 'yp-view':
+        return <YPViewChart />;
       case 'email-domains':
         return <EmailDomainChart />;
       case 'integration-activity':
