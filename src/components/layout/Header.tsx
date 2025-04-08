@@ -5,6 +5,9 @@ import { useData } from '@/hooks/useData';
 
 export const Header = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { clearData } = useData();
+
+<button onClick={clearData}>Clear All Data</button>
   const { uploadData } = useData();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

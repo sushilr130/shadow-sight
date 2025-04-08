@@ -14,6 +14,7 @@ interface DataContextProps {
   fullDateRange: [Date, Date] | null;
   uploadData: (file: File) => Promise<void>;
   setDateRange: (range: DateRange) => void;
+  clearData: () => void;
 }
 
 const DataContext = createContext<DataContextProps | undefined>(undefined);
@@ -100,7 +101,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       dateRange, 
       fullDateRange,
       uploadData, 
-      setDateRange 
+      setDateRange,
+      clearData,
     }}>
       {children}
     </DataContext.Provider>
@@ -113,4 +115,14 @@ export const useData = () => {
     throw new Error('useData must be used within a DataProvider');
   }
   return context;
+};
+
+const clearData = () => {
+  localStorage.removeItem('insight-haven-data'); // Replace with your actual key
+  setData([]);
+  setDateRange({ from: undefined, to: undefined });
+  toast({
+    title: "Data Cleared",
+    description: "All stored activity data has been removed.",
+  });
 };
