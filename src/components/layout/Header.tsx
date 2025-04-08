@@ -1,8 +1,7 @@
 
-import { MoveUpRight } from 'lucide-react';
+import { MoveUpRight,Upload } from 'lucide-react';
 import { useRef } from 'react';
 import { useData } from '@/hooks/useData';
-
 
 export const Header = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
