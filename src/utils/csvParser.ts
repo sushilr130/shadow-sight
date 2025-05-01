@@ -1,25 +1,45 @@
 
-import { ProcessedActivity, UserActivity } from '@/types';
+import { ProcessedActivity } from '@/types';
 import Papa from 'papaparse';
+import { toast } from 'sonner';
 
 export const parseCSV = (file: File): Promise<ProcessedActivity[]> => {
   return new Promise((resolve, reject) => {
+    console.log(`Starting to upload file: ${file.name} (${file.size} bytes, type: ${file.type})`);
+    
     Papa.parse(file, {
       header: true,
       skipEmptyLines: true,
       dynamicTyping: true,
       complete: (results) => {
         try {
+          console.log('Starting to parse CSV file:', file.name);
           const data = results.data as any[];
+          
+          if (!data || data.length === 0 || !Object.keys(data[0] || {}).length) {
+            console.error('Empty or invalid CSV file format');
+            resolve([]);
+            return;
+          }
           
           // Check if this is a raw or processed CSV
           const isProcessed = data.length > 0 && 'Email' in (data[0] || {});
           
+          console.log('Raw parsed CSV data:', data[0]);
+          
           if (isProcessed) {
             const processedData = data.map(transformProcessedRow).filter(Boolean);
+            console.log(`Processed data count: ${processedData.length}`);
+            if (processedData.length > 0) {
+              console.log('Sample processed row:', processedData[0]);
+            }
             resolve(processedData as ProcessedActivity[]);
           } else {
             const parsedData = data.map(transformRawRow).filter(Boolean);
+            console.log(`Processed data count: ${parsedData.length}`);
+            if (parsedData.length > 0) {
+              console.log('Sample processed row:', parsedData[0]);
+            }
             resolve(parsedData as ProcessedActivity[]);
           }
         } catch (error) {
@@ -37,42 +57,63 @@ export const parseCSV = (file: File): Promise<ProcessedActivity[]> => {
 
 const transformRawRow = (row: any): ProcessedActivity | null => {
   try {
-    if (!row.activityId || !row.user) return null;
+    if (!row['Activity Id'] && !row.activityId) return null;
+    
+    const activityId = row['Activity Id'] || row.activityId;
+    const user = row['User Name'] || row.user;
+    
+    if (!activityId || !user) return null;
     
     // Parse JSON fields if they're strings
     let policiesBreached: Record<string, string[]> = {};
     let values: Record<string, any> = {};
     
-    if (typeof row.policiesBreached === 'string') {
+    const policyViolationsField = row['Policy Violations'] || row.policiesBreached;
+    const valuesField = row['Values'] || row.values;
+    
+    if (typeof policyViolationsField === 'string') {
       try {
-        policiesBreached = JSON.parse(row.policiesBreached);
+        policiesBreached = JSON.parse(policyViolationsField);
       } catch (e) {
         policiesBreached = {};
       }
-    } else if (row.policiesBreached && typeof row.policiesBreached === 'object') {
-      policiesBreached = row.policiesBreached;
+    } else if (policyViolationsField && typeof policyViolationsField === 'object') {
+      policiesBreached = policyViolationsField;
     }
     
-    if (typeof row.values === 'string') {
+    if (typeof valuesField === 'string') {
       try {
-        values = JSON.parse(row.values);
+        values = JSON.parse(valuesField);
       } catch (e) {
         values = {};
       }
-    } else if (row.values && typeof row.values === 'object') {
-      values = row.values;
+    } else if (valuesField && typeof valuesField === 'object') {
+      values = valuesField;
     }
     
     // Parse date in format DD/MM/YYYY
-    const [day, month, year] = (row.date || '').split('/');
-    const parsedDate = new Date(Number(year), Number(month) - 1, Number(day));
+    const dateField = row['Date'] || row.date;
+    let parsedDate = null;
+    
+    if (dateField) {
+      const [day, month, year] = dateField.split('/');
+      parsedDate = new Date(Number(year), Number(month) - 1, Number(day));
+      
+      // Validate parsedDate
+      if (isNaN(parsedDate.getTime())) {
+        parsedDate = null;
+      }
+    }
     
     // Calculate week ending (Saturday)
-    const dateCopy = new Date(parsedDate);
-    const dayOfWeek = dateCopy.getDay(); // 0 is Sunday, 6 is Saturday
-    const daysUntilSaturday = (6 - dayOfWeek + 7) % 7;
-    dateCopy.setDate(dateCopy.getDate() + daysUntilSaturday);
-    const weekEnding = `${dateCopy.getDate().toString().padStart(2, '0')}/${(dateCopy.getMonth() + 1).toString().padStart(2, '0')}/${dateCopy.getFullYear()}`;
+    let weekEnding = '';
+    if (parsedDate) {
+      const dateCopy = new Date(parsedDate);
+      const dayOfWeek = dateCopy.getDay(); // 0 is Sunday, 6 is Saturday
+      const daysUntilSaturday = (6 - dayOfWeek + 7) % 7;
+      dateCopy.setDate(dateCopy.getDate() + daysUntilSaturday);
+      weekEnding = `${dateCopy.getFullYear()}-${(dateCopy.getMonth() + 1).toString().padStart(2, '0')}-${dateCopy.getDate().toString().padStart(2, '0')}`;
+    }
     
     // Extract email domain if available
     let emailDomain = undefined;
@@ -81,29 +122,37 @@ const transformRawRow = (row: any): ProcessedActivity | null => {
       if (emailMatch && emailMatch[1]) {
         emailDomain = emailMatch[1];
       }
+    } else if (user) {
+      const emailMatch = user.match(/@([^@]+)$/);
+      if (emailMatch && emailMatch[1]) {
+        emailDomain = emailMatch[1];
+      }
     }
+    
+    const integration = row['Integration'] || row.integration;
+    const riskScore = parseInt(row['Risk Score'] || row.riskScore) || 0;
     
     // Create a processed activity
     const activity: ProcessedActivity = {
-      activityId: row.activityId,
-      user: row.user,
-      date: row.date,
-      time: row.time,
-      riskScore: parseInt(row.riskScore) || 0,
-      integration: row.integration,
+      activityId,
+      user,
+      date: dateField || '',
+      time: row['Time'] || row.time || '',
+      riskScore,
+      integration: integration || '',
       policiesBreached,
       values,
-      status: row.status,
-      managerAction: row.managerAction,
+      status: row['Alert Status'] || row.status || '',
+      managerAction: row['Manager Action'] || row.managerAction || '',
       parsedDate,
       weekEnding,
       emailDomain,
       
       // Default all boolean flags to false
-      email: row.integration === 'si-email',
-      usb: row.integration === 'si-usb',
-      application: row.integration === 'si-application',
-      cloud: row.integration === 'si-cloud',
+      email: integration ? integration.toLowerCase() === 'si-email' : false,
+      usb: integration ? integration.toLowerCase() === 'si-usb' : false,
+      application: integration ? integration.toLowerCase() === 'si-application' : false,
+      cloud: integration ? integration.toLowerCase() === 'si-cloud' : false,
       bankAccountNumbers: false,
       confidentialData: false,
       creditCardNumbers: false,
@@ -175,11 +224,26 @@ const transformRawRow = (row: any): ProcessedActivity | null => {
 
 const transformProcessedRow = (row: any): ProcessedActivity | null => {
   try {
-    if (!row['Activity Id'] || !row['User Name']) return null;
+    if (!row['Activity Id'] && !row['activityId']) return null;
+    
+    const activityId = row['Activity Id'] || row['activityId'];
+    const user = row['User Name'] || row['user'];
+    
+    if (!activityId || !user) return null;
     
     // Parse date in format DD/MM/YYYY
-    const [day, month, year] = (row['Date'] || '').split('/');
-    const parsedDate = new Date(Number(year), Number(month) - 1, Number(day));
+    const dateField = row['Date'] || row['date'];
+    let parsedDate = null;
+    
+    if (dateField) {
+      const [day, month, year] = dateField.split('/');
+      parsedDate = new Date(Number(year), Number(month) - 1, Number(day));
+      
+      // Validate parsedDate
+      if (isNaN(parsedDate.getTime())) {
+        parsedDate = null;
+      }
+    }
     
     // Parse any JSON fields
     let policiesBreached = {};
@@ -188,61 +252,65 @@ const transformProcessedRow = (row: any): ProcessedActivity | null => {
     try {
       if (row['Policy Violations']) {
         policiesBreached = JSON.parse(row['Policy Violations']);
+      } else if (row['policiesBreached']) {
+        policiesBreached = row['policiesBreached'];
       }
     } catch (e) {}
     
     try {
       if (row['Values']) {
         values = JSON.parse(row['Values']);
+      } else if (row['values']) {
+        values = row['values'];
       }
     } catch (e) {}
     
     // Create a processed activity
     const activity: ProcessedActivity = {
-      activityId: row['Activity Id'],
-      user: row['User Name'],
-      date: row['Date'],
-      time: row['Time'],
-      riskScore: parseInt(row['Risk Score']) || 0,
-      integration: row['Integration'],
+      activityId,
+      user,
+      date: dateField || '',
+      time: row['Time'] || row['time'] || '',
+      riskScore: parseInt(row['Risk Score'] || row['riskScore']) || 0,
+      integration: row['Integration'] || row['integration'] || '',
       policiesBreached,
       values,
-      status: row['Alert Status'] || '',
-      managerAction: row['Manager Action'] || '',
+      status: row['Alert Status'] || row['status'] || '',
+      managerAction: row['Manager Action'] || row['managerAction'] || '',
       parsedDate,
-      weekEnding: row['Week Ending'] || '',
-      emailDomain: row['Email Domain'],
+      weekEnding: row['Week Ending'] || row['weekEnding'] || '',
+      emailDomain: row['Email Domain'] || row['emailDomain'],
       
       // Boolean flags
-      email: !!row['Email'],
-      usb: !!row['USB'],
-      application: !!row['Application'],
-      cloud: !!row['Cloud'],
-      bankAccountNumbers: !!row['Bank Account Numbers'],
-      confidentialData: !!row['Confidential Data'],
-      creditCardNumbers: !!row['Credit Card Numbers'],
-      dataLeakage: !!row['Data Leakage'],
-      documents: !!row['Documents'],
-      emailEnhancedMonitoring: !!row['Email Enhanced Monitoring'],
-      externalDomain: !!row['External Domain'],
-      personalEmailAddress: !!row['Personal Email Address'],
-      enhancedMonitoring: !!row['Enhanced Monitoring'],
-      financialData: !!row['Financial Data'],
-      fraudIndicators: !!row['Fraud Indicators'],
-      internalData: !!row['Internal Data'],
-      largeExport: !!row['Large Export'],
-      pci: !!row['PCI'],
-      pdf: !!row['PDF'],
-      performanceImprovementPlan: !!row['Performance Improvement Plan'],
-      phi: !!row['PHI'],
-      pii: !!row['PII'],
-      presentation: !!row['Presentation'],
-      productivityMonitored: !!row['Productivity Monitored'],
-      restrictedData: !!row['Restricted Data'],
-      sensitive: !!row['Sensitive'],
-      spreadsheets: !!row['Spreadsheets'],
-      userAtRisk: !!row['User At Risk'],
-      zipFiles: !!row['Zip Files'],
+      email: !!row['Email'] || !!row['email'],
+      usb: !!row['USB'] || !!row['usb'],
+      application: !!row['Application'] || !!row['application'],
+      cloud: !!row['Cloud'] || !!row['cloud'],
+      bankAccountNumbers: !!row['Bank Account Numbers'] || !!row['bankAccountNumbers'],
+      confidentialData: !!row['Confidential Data'] || !!row['confidentialData'],
+      creditCardNumbers: !!row['Credit Card Numbers'] || !!row['creditCardNumbers'],
+      dataLeakage: !!row['Data Leakage'] || !!row['dataLeakage'],
+      documents: !!row['Documents'] || !!row['documents'],
+      emailEnhancedMonitoring: !!row['Email Enhanced Monitoring'] || !!row['emailEnhancedMonitoring'],
+      externalDomain: !!row['External Domain'] || !!row['externalDomain'],
+      personalEmailAddress: !!row['Personal Email Address'] || !!row['personalEmailAddress'],
+      enhancedMonitoring: !!row['Enhanced Monitoring'] || !!row['enhancedMonitoring'],
+      financialData: !!row['Financial Data'] || !!row['financialData'],
+      fraudIndicators: !!row['Fraud Indicators'] || !!row['fraudIndicators'],
+      internalData: !!row['Internal Data'] || !!row['internalData'],
+      largeExport: !!row['Large Export'] || !!row['largeExport'],
+      pci: !!row['PCI'] || !!row['pci'],
+      pdf: !!row['PDF'] || !!row['pdf'],
+      performanceImprovementPlan: !!row['Performance Improvement Plan'] || !!row['performanceImprovementPlan'],
+      phi: !!row['PHI'] || !!row['phi'],
+      pii: !!row['PII'] || !!row['pii'],
+      presentation: !!row['Presentation'] || !!row['presentation'],
+      productivityMonitored: !!row['Productivity Monitored'] || !!row['productivityMonitored'],
+      restrictedData: !!row['Restricted Data'] || !!row['restrictedData'],
+      sensitive: !!row['Sensitive'] || !!row['sensitive'],
+      spreadsheets: !!row['Spreadsheets'] || !!row['spreadsheets'],
+      userAtRisk: !!row['User At Risk'] || !!row['userAtRisk'],
+      zipFiles: !!row['Zip Files'] || !!row['zipFiles'],
     };
     
     return activity;
@@ -251,4 +319,5 @@ const transformProcessedRow = (row: any): ProcessedActivity | null => {
     return null;
   }
 };
+
 
