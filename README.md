@@ -1,3 +1,4 @@
+Testing for everyone
 # Welcome to your Lovable project
 
 ## Project info
