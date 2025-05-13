@@ -95,3 +95,5 @@ export const UserActivityTable = () => {
 };
 
 export default UserActivityTable;
+
+
