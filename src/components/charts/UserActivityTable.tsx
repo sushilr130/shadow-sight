@@ -1,4 +1,3 @@
-
 import { useData } from '@/hooks/useData';
 import { getTopUsers } from '@/utils/dataTransformer';
 import { useMemo } from 'react';
