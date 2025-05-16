@@ -1,28 +1,27 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> 80e69cd3f252d5c999ace80d455db5c8018d0a33
 import { useData } from '@/hooks/useData';
-import { getSensitiveDataCounts } from '@/utils/dataTransformer';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { getActivityByHour } from '@/utils/dataTransformer';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useMemo } from 'react';
 
-export const SensitiveDataChart = () => {
+export const ActivityByTimeChart = () => {
   const { filteredData } = useData();
   
   const data = useMemo(() => {
-    return getSensitiveDataCounts(filteredData);
+    return getActivityByHour(filteredData);
   }, [filteredData]);
-  
-  const colors = ['#3b82f6', '#f97316', '#10b981'];
   
   if (filteredData.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-64 border border-border rounded-lg p-6">
-        <p className="text-muted-foreground">No data available for sensitive data</p>
+        <p className="text-muted-foreground">No data available for activity time distribution</p>
       </div>
     );
   }
+  
+  const formatXAxisTick = (value: string) => {
+    return value.split(':')[0];
+  };
   
   return (
     <div className="w-full h-64">
@@ -33,8 +32,10 @@ export const SensitiveDataChart = () => {
         >
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis 
-            dataKey="dataType" 
+            dataKey="hour" 
+            tickFormatter={formatXAxisTick}
             tick={{ fontSize: 12 }} 
+            interval={1}
             tickLine={false}
             axisLine={{ stroke: '#f0f0f0' }}
           />
@@ -45,21 +46,18 @@ export const SensitiveDataChart = () => {
           />
           <Tooltip
             formatter={(value) => [`${value} Activities`, 'Count']}
-            labelFormatter={(label) => `Type: ${label}`}
+            labelFormatter={(label) => `Time: ${label}`}
           />
           <Bar 
             dataKey="count" 
+            fill="#3b82f6"
             radius={[4, 4, 0, 0]}
             animationDuration={800}
-          >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
-            ))}
-          </Bar>
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>
   );
 };
 
-export default SensitiveDataChart;
+export default ActivityByTimeChart;

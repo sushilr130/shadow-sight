@@ -16,7 +16,7 @@ export const RiskScoreChart = () => {
     'rgba(250, 204, 21, 0.8)', // Moderate
     'rgba(251, 146, 60, 0.8)', // High
     'rgba(248, 113, 113, 0.8)', // Very High
-    'rgba(239, 68, 68, 0.8)', // Critical
+    'rgba(239, 68, 68, 0.8)', // Critical 
   ];
   
   if (filteredData.length === 0) {
