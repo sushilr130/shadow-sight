@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { ProcessedActivity, DateRange } from '@/types';
 import { calculateDateRange } from '@/utils/dataTransformer';
+import { loadData, DATE_RANGE_KEY } from '@/utils/storageUtils';
 
 export const useDataLoader = (
   setIsLoading: (loading: boolean) => void,
@@ -12,21 +13,14 @@ export const useDataLoader = (
     const fetchDataFromLocalStorage = () => {
       setIsLoading(true);
       try {
-        // Retrieve saved activities from localStorage
-        const savedDataStr = localStorage.getItem('insight-haven-data');
-        if (savedDataStr) {
-          const savedData = JSON.parse(savedDataStr) as ProcessedActivity[];
-          
-          // Convert string dates back to Date objects
-          const processedData = savedData.map(item => ({
-            ...item,
-            parsedDate: item.parsedDate ? new Date(item.parsedDate) : null
-          }));
-          
+        // Retrieve saved activities from chunked localStorage
+        const processedData = loadData();
+        
+        if (processedData && processedData.length > 0) {
           setData(processedData);
           
           // Retrieve saved date range from localStorage
-          const savedDateRangeStr = localStorage.getItem('insight-haven-date-range');
+          const savedDateRangeStr = localStorage.getItem(DATE_RANGE_KEY);
           if (savedDateRangeStr) {
             const savedDateRange = JSON.parse(savedDateRangeStr);
             setDateRange({
