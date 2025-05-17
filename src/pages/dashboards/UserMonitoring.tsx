@@ -35,12 +35,9 @@ const UserMonitoringContent = () => {
   filteredData.forEach(d => {
     if (d.enhancedMonitoring || d.performanceImprovementPlan || d.productivityMonitored) {
       const key = d.user;
-      // Extract just the username part (before @) for display in chart
-      const displayName = key.split('@')[0];
-      
       const current = userMonitoring.get(key) || { 
-        user: key,
-        name: displayName,
+        user: key, 
+        name: key.split('@')[0], // Extract just the name part
         'Enhanced Monitoring': 0,
         'Performance Improvement Plan': 0,
         'Productivity Monitored': 0,
@@ -132,7 +129,7 @@ const UserMonitoringContent = () => {
                     <YAxis 
                       type="category" 
                       dataKey="name" 
-                      width={130}
+                      width={120} 
                       tick={{ fontSize: 12 }}
                     />
                     <Tooltip content={renderTooltip} />
