@@ -184,38 +184,74 @@ const Sidebar = ({ className }: SidebarProps) => {
         <div className="font-semibold">Insight Haven</div>
       </div>
       <div className="flex-1 overflow-y-auto px-4">
-        {NAV_GROUPS.map((group, index) => (
-          <div key={index} className="mb-4">
-            <div className="px-2 py-2">
-              <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{group.title}</h3>
+        {NAV_GROUPS.map((group, index) => {
+          // Skip rendering the group title for Settings, but still render its items
+          if (group.title === 'Settings') {
+            return (
+              <div key={index} className="mb-4">
+                <ul className="space-y-1">
+                  {group.items.map((item) => (
+                    <li key={item.href}>
+                      <NavLink
+                        to={item.href}
+                        className={({ isActive }) =>
+                          cn(
+                            'group flex items-center space-x-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground',
+                            isActive
+                              ? 'bg-accent text-accent-foreground'
+                              : 'text-secondary-foreground'
+                          )
+                        }
+                      >
+                        <item.icon className="h-4 w-4" />
+                        <span>{item.title}</span>
+                        {item.label ? (
+                          <span className="ml-auto rounded-sm bg-primary px-1.5 py-0.5 text-xs font-semibold text-primary-foreground">
+                            {item.label}
+                          </span>
+                        ) : null}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          }
+          
+          // Normal rendering for other groups
+          return (
+            <div key={index} className="mb-4">
+              <div className="px-2 py-2">
+                <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{group.title}</h3>
+              </div>
+              <ul className="space-y-1">
+                {group.items.map((item) => (
+                  <li key={item.href}>
+                    <NavLink
+                      to={item.href}
+                      className={({ isActive }) =>
+                        cn(
+                          'group flex items-center space-x-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground',
+                          isActive
+                            ? 'bg-accent text-accent-foreground'
+                            : 'text-secondary-foreground'
+                        )
+                      }
+                    >
+                      <item.icon className="h-4 w-4" />
+                      <span>{item.title}</span>
+                      {item.label ? (
+                        <span className="ml-auto rounded-sm bg-primary px-1.5 py-0.5 text-xs font-semibold text-primary-foreground">
+                          {item.label}
+                        </span>
+                      ) : null}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul className="space-y-1">
-              {group.items.map((item) => (
-                <li key={item.href}>
-                  <NavLink
-                    to={item.href}
-                    className={({ isActive }) =>
-                      cn(
-                        'group flex items-center space-x-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground',
-                        isActive
-                          ? 'bg-accent text-accent-foreground'
-                          : 'text-secondary-foreground'
-                      )
-                    }
-                  >
-                    <item.icon className="h-4 w-4" />
-                    <span>{item.title}</span>
-                    {item.label ? (
-                      <span className="ml-auto rounded-sm bg-primary px-1.5 py-0.5 text-xs font-semibold text-primary-foreground">
-                        {item.label}
-                      </span>
-                    ) : null}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </aside>
   );
