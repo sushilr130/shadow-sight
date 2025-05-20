@@ -4,6 +4,7 @@ import { ProcessedActivity, DateRange } from '@/types';
 import { parseCSV } from '@/utils/csvParser';
 import { toast } from 'sonner';
 import { calculateDateRange } from '@/utils/dataTransformer';
+import { clearData, DATE_RANGE_KEY } from '@/utils/storageUtils';
 
 export const useDataOperations = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -80,8 +81,8 @@ export const useDataOperations = () => {
   const clearAllData = () => {
     setIsLoading(true);
     try {
-      localStorage.removeItem('insight-haven-data');
-      localStorage.removeItem('insight-haven-date-range');
+      clearData();
+      localStorage.removeItem(DATE_RANGE_KEY);
       setData([]);
       setDateRange({ from: undefined, to: undefined });
       toast.success('All data has been removed from storage');
