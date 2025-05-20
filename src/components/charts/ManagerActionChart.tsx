@@ -13,6 +13,7 @@ export const ManagerActionChart = () => {
   
   const COLORS = ['#ef4444', '#f97316', '#22c55e', '#cbd5e1'];
   
+  console.log(filteredData)
   if (filteredData.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-64 border border-border rounded-lg p-6">

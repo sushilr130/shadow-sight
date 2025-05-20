@@ -1,9 +1,4 @@
-
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Link } from "react-router-dom";
-import { ModeToggle } from "@/components/ui/mode-toggle";
-import { Button } from "@/components/ui/button";
-import { PanelLeft } from "lucide-react";
 
 const Header = () => {
   return (
@@ -14,10 +9,7 @@ const Header = () => {
         </div>
         
         <div className="flex items-center ml-auto gap-2">
-          <ModeToggle />
-          <Button variant="ghost" size="sm">
-            Help
-          </Button>
+          {/* Dark mode toggle and help button removed */}
         </div>
       </div>
     </header>

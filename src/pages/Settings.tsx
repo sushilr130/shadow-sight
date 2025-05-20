@@ -1,7 +1,6 @@
 
 import DashboardTemplate from '@/components/layout/DashboardTemplate';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ModeToggle } from '@/components/ui/mode-toggle';
 import { Button } from '@/components/ui/button';
 import { useData } from '@/hooks/useData';
 
@@ -10,23 +9,7 @@ const SettingsContent = () => {
   const { clearAllData } = useData();
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Appearance</CardTitle>
-          <CardDescription>Customize the look and feel of the application</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="font-medium">Theme</h3>
-              <p className="text-sm text-muted-foreground">Switch between light and dark mode</p>
-            </div>
-            <ModeToggle />
-          </div>
-        </CardContent>
-      </Card>
-      
+    <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
       <Card>
         <CardHeader>
           <CardTitle>Data Management</CardTitle>
