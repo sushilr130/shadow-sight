@@ -149,8 +149,8 @@ export const transformRawRow = (row: any): ProcessedActivity | null => {
       emailDomain,
       
       // Default all boolean flags to false
-      email: integration ? integration.toLowerCase() === 'si-email' : false,
-      usb: integration ? integration.toLowerCase() === 'si-usb' : false,
+      email: integration ? ['si-email', 'office-365-email'].includes(integration.toLowerCase()) : false,
+      usb: integration ? ['si-usb', 'crowdstrike-usb'].includes(integration.toLowerCase()) : false,
       application: integration ? integration.toLowerCase() === 'si-application' : false,
       cloud: integration ? integration.toLowerCase() === 'si-cloud' : false,
       bankAccountNumbers: false,

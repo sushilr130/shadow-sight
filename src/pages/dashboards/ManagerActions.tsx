@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useData } from '@/hooks/useData';
 import ManagerActionChart from '@/components/charts/ManagerActionChart';
 import { UserCheck2, AlertTriangle, CheckCircle } from 'lucide-react';
+import { toCamelCase } from '@/utils/camelcase';
 
 const ManagerActionsContent = () => {
   const { filteredData } = useData();
@@ -14,9 +15,13 @@ const ManagerActionsContent = () => {
   const pendingActions = incidents - resolved;
   
   // Manager action types
-  const escalated = filteredData.filter(d => d.managerAction === 'Escalated').length;
-  const counselled = filteredData.filter(d => d.managerAction === 'Employee Counselled').length;
-  const knownGood = filteredData.filter(d => d.managerAction === 'Known Good Activity').length;
+  const escalatedData = ['escalated', 'escalatedForInvestigation'];
+  const counselledData = ['employeeCounselled', 'userBehaviourAddressed'];
+  const knownGoodData = ['knownGoodActivity', 'authorisedActivity'];
+
+  const escalated = filteredData.filter(d => escalatedData.includes(toCamelCase(d.managerAction))).length;
+  const counselled = filteredData.filter(d => counselledData.includes(toCamelCase(d.managerAction))).length;
+  const knownGood = filteredData.filter(d => knownGoodData.includes(toCamelCase(d.managerAction))).length;
   
   return (
     <div className="space-y-8">
@@ -157,23 +162,23 @@ const ManagerActionsContent = () => {
                     <tr>
                       <td className="px-4 py-2 text-sm">Critical (2000+)</td>
                       <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 2000).length}</td>
-                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 2000 && d.managerAction === 'Escalated').length}</td>
-                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 2000 && d.managerAction === 'Employee Counselled').length}</td>
-                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 2000 && d.managerAction === 'Known Good Activity').length}</td>
+                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 2000 && escalatedData.includes(toCamelCase(d.managerAction))).length}</td>
+                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 2000 && counselledData.includes(toCamelCase(d.managerAction))).length}</td>
+                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 2000 && knownGoodData.includes(toCamelCase(d.managerAction))).length}</td>
                     </tr>
                     <tr>
                       <td className="px-4 py-2 text-sm">Very High (1501-2000)</td>
                       <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1500 && d.riskScore <= 2000).length}</td>
-                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1500 && d.riskScore <= 2000 && d.managerAction === 'Escalated').length}</td>
-                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1500 && d.riskScore <= 2000 && d.managerAction === 'Employee Counselled').length}</td>
-                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1500 && d.riskScore <= 2000 && d.managerAction === 'Known Good Activity').length}</td>
+                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1500 && d.riskScore <= 2000 && escalatedData.includes(toCamelCase(d.managerAction))).length}</td>
+                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1500 && d.riskScore <= 2000 && counselledData.includes(toCamelCase(d.managerAction))).length}</td>
+                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1500 && d.riskScore <= 2000 && knownGoodData.includes(toCamelCase(d.managerAction))).length}</td>
                     </tr>
                     <tr>
                       <td className="px-4 py-2 text-sm">High (1001-1500)</td>
                       <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1000 && d.riskScore <= 1500).length}</td>
-                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1000 && d.riskScore <= 1500 && d.managerAction === 'Escalated').length}</td>
-                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1000 && d.riskScore <= 1500 && d.managerAction === 'Employee Counselled').length}</td>
-                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1000 && d.riskScore <= 1500 && d.managerAction === 'Known Good Activity').length}</td>
+                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1000 && d.riskScore <= 1500 && escalatedData.includes(toCamelCase(d.managerAction))).length}</td>
+                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1000 && d.riskScore <= 1500 && counselledData.includes(toCamelCase(d.managerAction))).length}</td>
+                      <td className="px-4 py-2 text-center text-sm">{filteredData.filter(d => d.riskScore > 1000 && d.riskScore <= 1500 && knownGoodData.includes(toCamelCase(d.managerAction))).length}</td>
                     </tr>
                   </tbody>
                 </table>

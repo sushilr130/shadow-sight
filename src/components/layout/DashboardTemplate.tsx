@@ -1,3 +1,4 @@
+
 import Header from './Header';
 import Footer from './Footer';
 import { SidebarInset } from '@/components/ui/sidebar';
@@ -25,6 +26,8 @@ const DashboardTemplateContent = ({
   const location = useLocation();
   const { data } = useData();
   const isMainDashboard = location.pathname === '/';
+  const isDataManagement = location.pathname === '/data-management';
+  const isSettings = location.pathname === '/settings';
   const [isExporting, setIsExporting] = useState(false);
   const hasData = data.length > 0;
   
@@ -77,8 +80,8 @@ const DashboardTemplateContent = ({
                 {title}
               </h1>
               <div className="flex gap-3">
-                {/* Regular export button - exports only current page */}
-                {hasData && (
+                {/* Only show export button if we have data and we're not on Data Management or Settings pages */}
+                {hasData && !isDataManagement && !isSettings && (
                   <Button 
                     onClick={handleExport} 
                     variant="outline" 
