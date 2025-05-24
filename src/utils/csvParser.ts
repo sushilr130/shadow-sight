@@ -55,7 +55,7 @@ export const parseCSV = (file: File): Promise<ProcessedActivity[]> => {
   });
 };
 
-const transformRawRow = (row: any): ProcessedActivity | null => {
+export const transformRawRow = (row: any): ProcessedActivity | null => {
   try {
     if (!row['Activity Id'] && !row.activityId) return null;
     
@@ -222,7 +222,7 @@ const transformRawRow = (row: any): ProcessedActivity | null => {
   }
 };
 
-const transformProcessedRow = (row: any): ProcessedActivity | null => {
+export const transformProcessedRow = (row: any): ProcessedActivity | null => {
   try {
     if (!row['Activity Id'] && !row['activityId']) return null;
     
@@ -318,7 +318,9 @@ const transformProcessedRow = (row: any): ProcessedActivity | null => {
     console.error('Error transforming processed row:', error, row);
     return null;
   }
-};
 
+
+
+};
 
 
