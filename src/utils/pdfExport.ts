@@ -13,7 +13,7 @@ export const exportToPDF = async (options: ExportOptions = {}) => {
   // Default options
   const {
     title = 'Activity Dashboard Report',
-    subtitle = 'Generated from Insight Haven',
+    subtitle = 'Generated from ShadowSight',
     includeTimestamp = true,
   } = options;
 

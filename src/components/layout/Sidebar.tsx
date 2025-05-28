@@ -181,7 +181,7 @@ const Sidebar = ({ className }: SidebarProps) => {
       )}
     >
       <div className="px-6 pb-4">
-        <div className="font-semibold">Insight Haven</div>
+        <div className="font-semibold">ShadowSight</div>
       </div>
       <div className="flex-1 overflow-y-auto px-4">
         {NAV_GROUPS.map((group, index) => {
