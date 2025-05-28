@@ -104,7 +104,7 @@ export const DataUploader = () => {
   return (
     <Tabs defaultValue="replace" className="w-full">
       <TabsList className="mb-4 grid w-full grid-cols-2">
-        <TabsTrigger value="replace">Replace Data</TabsTrigger>
+        <TabsTrigger value="replace">Add Data</TabsTrigger>
         <TabsTrigger value="append">Append Data</TabsTrigger>
       </TabsList>
       

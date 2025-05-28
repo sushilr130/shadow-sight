@@ -7,7 +7,7 @@ const WelcomeScreen = () => {
     <div className="h-screen flex flex-col items-center justify-center">
       <Card className="max-w-3xl w-full">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl">Welcome to the Activity Analytics Dashboard</CardTitle>
+          <CardTitle className="text-2xl">Welcome to the ShadowSight Insight  Dashboard</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-center text-muted-foreground mb-8">
