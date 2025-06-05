@@ -12,7 +12,7 @@ const DataManagement = () => {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground mb-6">
-            Upload, manage, and refresh your activity data. All data is stored securely in your browser's local storage.
+            Upload, manage, and refresh your breach data. All data is stored securely in your browser's local storage.
           </p>
           
           <DataManagementSection />

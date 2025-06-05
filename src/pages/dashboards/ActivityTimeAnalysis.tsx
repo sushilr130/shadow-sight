@@ -142,8 +142,8 @@ const ActivityTimeAnalysisContent = () => {
       
       <Card className="shadow-sm">
         <CardHeader>
-          <CardTitle>Activity Types by Month</CardTitle>
-          <CardDescription>Comparison of different activity types over months</CardDescription>
+          <CardTitle>Breach Types by Month</CardTitle>
+          <CardDescription>Comparison of different breach types over months</CardDescription>
         </CardHeader>
         <CardContent>
           <ActivityTypeByMonthChart />
@@ -155,7 +155,7 @@ const ActivityTimeAnalysisContent = () => {
 
 const ActivityTimeAnalysis = () => {
   return (
-    <DashboardTemplate title="Activity Time Analysis">
+    <DashboardTemplate title="Breach Time Analysis">
       <ActivityTimeAnalysisContent />
     </DashboardTemplate>
   );

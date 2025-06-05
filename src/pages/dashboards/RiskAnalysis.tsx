@@ -97,8 +97,8 @@ const RiskAnalysisContent = () => {
         return (
           <Card>
             <CardHeader>
-              <CardTitle>Activity Status</CardTitle>
-              <CardDescription>Distribution of activities by status</CardDescription>
+              <CardTitle>Breach Status</CardTitle>
+              <CardDescription>Distribution of Breaches by status</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-80">

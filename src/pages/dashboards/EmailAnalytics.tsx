@@ -12,8 +12,8 @@ const EmailAnalyticsContent = () => {
   
   // Count of activity ID and email
   const activityEmailData = [
-    { name: 'Email Activities', count: filteredData.filter(d => d.email).length },
-    { name: 'Total Activities', count: filteredData.length }
+    { name: 'Email Breaches', count: filteredData.filter(d => d.email).length },
+    { name: 'Total Breaches', count: filteredData.length }
   ];
   
   // Data classification in email
@@ -73,7 +73,7 @@ const EmailAnalyticsContent = () => {
         return (
           <Card>
             <CardHeader>
-              <CardTitle>Activity Counts</CardTitle>
+              <CardTitle>Breach Counts</CardTitle>
               <CardDescription>Number of email activities vs total activities</CardDescription>
             </CardHeader>
             <CardContent>

@@ -27,13 +27,13 @@ const CalendarContent = () => {
   return (
     <>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold tracking-tight">Activity Calendar</h2>
+        <h2 className="text-3xl font-bold tracking-tight">Breach Calendar</h2>
       </div>
       
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle>Activity Calendar</CardTitle>
-          <CardDescription>Monthly activity distribution</CardDescription>
+          <CardTitle>Breach Calendar</CardTitle>
+          <CardDescription>Monthly Breach distribution</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="h-80">
@@ -72,7 +72,7 @@ const CalendarContent = () => {
 // Main component that provides the DataProvider via DashboardTemplate
 const Calendar = () => {
   return (
-    <DashboardTemplate title="Activity Calendar">
+    <DashboardTemplate title="Breach Calendar">
       <CalendarContent />
     </DashboardTemplate>
   );

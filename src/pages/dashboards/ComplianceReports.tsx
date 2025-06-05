@@ -160,7 +160,7 @@ const ComplianceReportsContent = () => {
         return (
           <Card>
             <CardHeader>
-              <CardTitle>Activity Types</CardTitle>
+              <CardTitle>Breach Types</CardTitle>
               <CardDescription>Count of email, USB, and cloud activities</CardDescription>
             </CardHeader>
             <CardContent>
