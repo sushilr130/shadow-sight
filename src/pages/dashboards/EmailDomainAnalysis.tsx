@@ -12,7 +12,7 @@ const EmailDomainAnalysisContent = () => {
       <Card className="shadow-sm">
         <CardHeader>
           <CardTitle>Email Domain Distribution</CardTitle>
-          <CardDescription>Distribution of activities by external email domains</CardDescription>
+          <CardDescription>Distribution of breaches by external email domains</CardDescription>
         </CardHeader>
         <CardContent>
           <EmailDomainChart />
@@ -49,7 +49,7 @@ const EmailDomainAnalysisContent = () => {
               </div>
             </div>
             <p className="text-center text-sm text-muted-foreground">
-              Activities with personal email domains
+              Breaches with personal email domains
             </p>
           </CardContent>
         </Card>
@@ -57,7 +57,7 @@ const EmailDomainAnalysisContent = () => {
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle>External Domain Risk</CardTitle>
-            <CardDescription>Average risk score for external domain activities</CardDescription>
+            <CardDescription>Average risk score for external domain breaches</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-center h-20">

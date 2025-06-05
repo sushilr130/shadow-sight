@@ -48,7 +48,7 @@ const ActivityTimeAnalysisContent = () => {
         <Card className="shadow-sm">
           <CardHeader className="pb-2">
             <div className="flex justify-between">
-              <CardTitle>Peak Activity Hour</CardTitle>
+              <CardTitle>Peak Breach Hour</CardTitle>
               <Clock className="h-5 w-5 text-muted-foreground" />
             </div>
           </CardHeader>
@@ -59,7 +59,7 @@ const ActivityTimeAnalysisContent = () => {
               </div>
             </div>
             <p className="text-center text-sm text-muted-foreground">
-              {peak.count} activities during this hour
+              {peak.count} breaches during this hour
             </p>
           </CardContent>
         </Card>
@@ -86,7 +86,7 @@ const ActivityTimeAnalysisContent = () => {
               </div>
             </div>
             <p className="text-center text-sm text-muted-foreground">
-              Activities within business hours (8:00 - 18:00)
+              Breaches within business hours (8:00 - 18:00)
             </p>
           </CardContent>
         </Card>
@@ -124,7 +124,7 @@ const ActivityTimeAnalysisContent = () => {
               </div>
             </div>
             <p className="text-center text-sm text-muted-foreground">
-              Average risk score for after-hours activities
+              Average risk score for after-hours breaches
             </p>
           </CardContent>
         </Card>
@@ -132,8 +132,8 @@ const ActivityTimeAnalysisContent = () => {
       
       <Card className="shadow-sm">
         <CardHeader>
-          <CardTitle>Activity by Hour of Day</CardTitle>
-          <CardDescription>Distribution of activities across different hours of the day</CardDescription>
+          <CardTitle>Breach by Hour of Day</CardTitle>
+          <CardDescription>Distribution of breaches across different hours of the day</CardDescription>
         </CardHeader>
         <CardContent>
           <ActivityByTimeChart />
@@ -142,8 +142,8 @@ const ActivityTimeAnalysisContent = () => {
       
       <Card className="shadow-sm">
         <CardHeader>
-          <CardTitle>Activity Types by Month</CardTitle>
-          <CardDescription>Comparison of different activity types over months</CardDescription>
+          <CardTitle>Breach Types by Month</CardTitle>
+          <CardDescription>Comparison of different breach types over months</CardDescription>
         </CardHeader>
         <CardContent>
           <ActivityTypeByMonthChart />
@@ -155,7 +155,7 @@ const ActivityTimeAnalysisContent = () => {
 
 const ActivityTimeAnalysis = () => {
   return (
-    <DashboardTemplate title="Activity Time Analysis">
+    <DashboardTemplate title="Breach Time Analysis">
       <ActivityTimeAnalysisContent />
     </DashboardTemplate>
   );

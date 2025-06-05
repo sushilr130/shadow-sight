@@ -15,7 +15,7 @@ const routesToTest = [
   { path: '/user-monitoring', text: /user monitoring/i },
   { path: '/compliance-reports', text: /compliance reports/i },
   { path: '/email-domain-analysis', text: /email domain analysis/i },
-  { path: '/activity-time-analysis', text: /activity time analysis/i },
+  { path: '/activity-time-analysis', text: /Breach time analysis/i },
   { path: '/file-analysis', text: /file analysis/i },
   { path: '/employee-monitoring', text: /employee monitoring/i },
   { path: '/data-leakage-investigation', text: /data leakage investigation/i },

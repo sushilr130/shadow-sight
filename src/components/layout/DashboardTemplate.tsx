@@ -108,7 +108,7 @@ const DashboardTemplate = (props: DashboardTemplateProps) => {
   const DataTemplateContent = () => {
     const { data } = useData();
     const hasData = data.length > 0;
-    const isMainDashboard = props.title === "Activity Dashboard";
+    const isMainDashboard = props.title === "Breach Dashboard";
     
     // If no data and on main dashboard, render content without SidebarProvider
     if (!hasData && isMainDashboard) {

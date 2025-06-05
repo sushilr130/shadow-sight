@@ -71,8 +71,8 @@ const EmployeeMonitoringContent = () => {
       
       <Card className="shadow-sm">
         <CardHeader>
-          <CardTitle>Monitoring Activity by Month</CardTitle>
-          <CardDescription>Trend of monitoring activities over time</CardDescription>
+          <CardTitle>Monitoring Breach by Month</CardTitle>
+          <CardDescription>Trend of monitoring breaches over time</CardDescription>
         </CardHeader>
         <CardContent>
           <MonitoringDataByMonthChart />

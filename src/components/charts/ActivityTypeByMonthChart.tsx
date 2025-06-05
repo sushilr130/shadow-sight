@@ -14,7 +14,7 @@ export const ActivityTypeByMonthChart = () => {
   if (filteredData.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-64 border border-border rounded-lg p-6">
-        <p className="text-muted-foreground">No data available for activity by month</p>
+        <p className="text-muted-foreground">No data available for breach by month</p>
       </div>
     );
   }

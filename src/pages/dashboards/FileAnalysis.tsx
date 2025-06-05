@@ -14,7 +14,7 @@ const FileAnalysisContent = () => {
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle>File Type Distribution</CardTitle>
-            <CardDescription>Distribution of activities by file types</CardDescription>
+            <CardDescription>Distribution of breaches by file types</CardDescription>
           </CardHeader>
           <CardContent>
             <FileTypeChart />

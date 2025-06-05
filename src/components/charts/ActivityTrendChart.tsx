@@ -27,7 +27,7 @@ export const ActivityTrendChart = () => {
   if (filteredData.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-64 border border-border rounded-lg p-6">
-        <p className="text-muted-foreground">No data available for activity trends</p>
+        <p className="text-muted-foreground">No data available for breach trends</p>
       </div>
     );
   }
@@ -45,7 +45,7 @@ export const ActivityTrendChart = () => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h3 className="text-lg font-medium">Activity Trends</h3>
+        <h3 className="text-lg font-medium">Breach Trends</h3>
         <ToggleGroup type="single" value={chartType} onValueChange={(value) => value && setChartType(value as 'line' | 'area')}>
           <ToggleGroupItem value="line" aria-label="Line Chart">
             <LineChartIcon className="h-4 w-4" />
