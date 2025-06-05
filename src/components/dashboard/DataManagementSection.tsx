@@ -34,7 +34,7 @@ export const DataManagementSection = () => {
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                This will permanently delete all your uploaded activity data. This action cannot be undone.
+                This will permanently delete all your uploaded breach data. This action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

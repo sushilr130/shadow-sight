@@ -97,7 +97,7 @@ const NAV_GROUPS: NavGroup[] = [
         icon: Globe,
       },
       {
-        title: 'Activity Time Analysis',
+        title: 'Breach Time Analysis',
         href: '/activity-time-analysis',
         icon: Clock,
       },

@@ -47,14 +47,14 @@ export const UserActivityHeatmap = () => {
   if (filteredData.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-64 border border-border rounded-lg p-6">
-        <p className="text-muted-foreground">No data available for activity heatmap</p>
+        <p className="text-muted-foreground">No data available for breach heatmap</p>
       </div>
     );
   }
   
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium">Activity Heatmap (Day/Hour)</h3>
+      <h3 className="text-lg font-medium">Breach Heatmap (Day/Hour)</h3>
       
       <div className="w-full relative p-4 overflow-x-auto">
         <div className="flex mb-2">

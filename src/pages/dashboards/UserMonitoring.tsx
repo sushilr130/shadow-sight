@@ -118,7 +118,7 @@ const UserMonitoringContent = () => {
           <Card>
             <CardHeader>
               <CardTitle>Top Monitored Users</CardTitle>
-              <CardDescription>Users with highest monitoring activities</CardDescription>
+              <CardDescription>Users with highest monitoring breaches</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-96">

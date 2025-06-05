@@ -13,14 +13,14 @@ const AnalyticsContent = () => {
     <>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div className="bg-card rounded-lg border p-6">
-          <h2 className="text-lg font-medium mb-4">Activity by Type</h2>
+          <h2 className="text-lg font-medium mb-4">Breach by Type</h2>
           <div className="h-80">
             <ActivityTypeChart />
           </div>
         </div>
         
         <div className="bg-card rounded-lg border p-6">
-          <h2 className="text-lg font-medium mb-4">Activity Trend</h2>
+          <h2 className="text-lg font-medium mb-4">Breach Trend</h2>
           <div className="h-80">
             <ActivityTrendChart />
           </div>
@@ -35,7 +35,7 @@ const AnalyticsContent = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
-            { title: "Email Analytics", description: "Email activity analysis with data classification metrics" },
+            { title: "Email Analytics", description: "Email breach analysis with data classification metrics" },
             { title: "USB Analytics", description: "USB device usage patterns and data classification" },
             { title: "Cloud Analytics", description: "Cloud service usage and data classification" },
             { title: "Data Leakage", description: "Data leakage trends and prevention" },

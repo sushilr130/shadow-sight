@@ -1,54 +1,31 @@
-
 import DashboardTemplate from '@/components/layout/DashboardTemplate';
 import { useData } from '@/hooks/useData';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useState } from 'react';
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
+import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationLink } from '@/components/ui/pagination';
 
 const EmailAnalyticsContent = () => {
   const { filteredData } = useData();
   const [activePage, setActivePage] = useState(1);
-  
-  // Count of activity ID and email
+
   const activityEmailData = [
-    { name: 'Email Activities', count: filteredData.filter(d => d.email).length },
-    { name: 'Total Activities', count: filteredData.length }
+    { name: 'Email Breaches', count: filteredData.filter(d => d.email).length },
+    { name: 'Total Breaches', count: filteredData.length }
   ];
-  
-  // Data classification in email
+
   const emailDataClassification = [
-    { 
-      name: 'Internal Data', 
-      count: filteredData.filter(d => d.email && d.internalData).length 
-    },
-    { 
-      name: 'Restricted Data', 
-      count: filteredData.filter(d => d.email && d.restrictedData).length 
-    },
-    { 
-      name: 'Confidential Data', 
-      count: filteredData.filter(d => d.email && d.confidentialData).length 
-    }
+    { name: 'Internal Data', count: filteredData.filter(d => d.email && d.internalData).length },
+    { name: 'Restricted Data', count: filteredData.filter(d => d.email && d.restrictedData).length },
+    { name: 'Confidential Data', count: filteredData.filter(d => d.email && d.confidentialData).length }
   ];
-  
-  // Count of documents, presentation, spreadsheets in personal email
+
   const personalEmailFileTypes = [
-    { 
-      name: 'Documents', 
-      count: filteredData.filter(d => d.email && d.personalEmailAddress && d.documents).length 
-    },
-    { 
-      name: 'Presentations', 
-      count: filteredData.filter(d => d.email && d.personalEmailAddress && d.presentation).length 
-    },
-    { 
-      name: 'Spreadsheets', 
-      count: filteredData.filter(d => d.email && d.personalEmailAddress && d.spreadsheets).length 
-    }
+    { name: 'Documents', count: filteredData.filter(d => d.email && d.personalEmailAddress && d.documents).length },
+    { name: 'Presentations', count: filteredData.filter(d => d.email && d.personalEmailAddress && d.presentation).length },
+    { name: 'Spreadsheets', count: filteredData.filter(d => d.email && d.personalEmailAddress && d.spreadsheets).length }
   ];
-  
-  // Email enhanced monitoring by month
+
   const months = ['Jan', 'Feb', 'Mar'];
   const emailMonitoringByMonth = months.map(month => ({
     name: month,
@@ -61,20 +38,23 @@ const EmailAnalyticsContent = () => {
     }).length
   }));
 
-  // Handle page changes
-  const handlePageChange = (page: number) => {
-    setActivePage(page);
-  };
+  const titles = [
+    'Breach Counts',
+    'Email Data Classification',
+    'Personal Email File Types',
+    'Email Enhanced Monitoring'
+  ];
 
-  // Render the appropriate chart based on active page
+  const handlePageChange = (page: number) => setActivePage(page);
+
   const renderActiveChart = () => {
     switch (activePage) {
       case 1:
         return (
           <Card>
             <CardHeader>
-              <CardTitle>Activity Counts</CardTitle>
-              <CardDescription>Number of email activities vs total activities</CardDescription>
+              <CardTitle>Breach Counts</CardTitle>
+              <CardDescription>Number of email breaches vs total breaches</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-80">
@@ -169,47 +149,41 @@ const EmailAnalyticsContent = () => {
   return (
     <div className="space-y-8">
       {renderActiveChart()}
-      
-      <Pagination className="mt-8">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious 
-              onClick={() => handlePageChange(Math.max(1, activePage - 1))}
-              className={activePage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-            />
-          </PaginationItem>
-          
-          {[1, 2, 3, 4].map((page) => (
-            <PaginationItem key={page}>
-              <PaginationLink
-                onClick={() => handlePageChange(page)}
-                isActive={activePage === page}
-                className="cursor-pointer"
-              >
-                {page}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-          
-          <PaginationItem>
-            <PaginationNext 
-              onClick={() => handlePageChange(Math.min(4, activePage + 1))}
-              className={activePage === 4 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+
+<Pagination className="mt-8 text-sm md:text-base">
+  <PaginationContent className="flex flex-wrap gap-4 justify-center">
+    {activePage > 1 && (
+      <PaginationItem>
+        <button
+          onClick={() => handlePageChange(activePage - 1)}
+          className="px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 transition"
+        >
+          ← {titles[activePage - 2]}
+        </button>
+      </PaginationItem>
+    )}
+
+    {activePage < titles.length && (
+      <PaginationItem>
+        <button
+          onClick={() => handlePageChange(activePage + 1)}
+          className="px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 transition"
+        >
+          {titles[activePage]} →
+        </button>
+
+              </PaginationItem>
+            )}
+  </PaginationContent>
+</Pagination>
     </div>
   );
 };
 
-// Wrapper component that uses DashboardTemplate
-const EmailAnalytics = () => {
-  return (
-    <DashboardTemplate title="Email Analytics">
-      <EmailAnalyticsContent />
-    </DashboardTemplate>
-  );
-};
+const EmailAnalytics = () => (
+  <DashboardTemplate title="Email Analytics">
+    <EmailAnalyticsContent />
+  </DashboardTemplate>
+);
 
 export default EmailAnalytics;

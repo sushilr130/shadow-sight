@@ -19,7 +19,7 @@ export const Dashboard = () => {
     <div className="py-8 px-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-semibold tracking-tight">
-          Activity Dashboard
+          Breach Dashboard
         </h1>
         <div className="flex items-center gap-2">
           <DateRangePicker />

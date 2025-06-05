@@ -14,7 +14,7 @@ export const StatsSection = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <StatsCard 
-        title="Total Activities" 
+        title="Total Breaches" 
         value={filteredData.length}
         icon={<FileText className="h-5 w-5" />}
         description="Monitored user actions"
@@ -29,7 +29,7 @@ export const StatsSection = () => {
         title="Average Risk Score" 
         value={averageRiskScore}
         icon={<BarChart3 className="h-5 w-5" />}
-        description="Across all activities"
+        description="Across all breaches"
         trend={
           data.length > filteredData.length 
             ? {
@@ -41,7 +41,7 @@ export const StatsSection = () => {
         }
       />
       <StatsCard 
-        title="High Risk Activities" 
+        title="High Risk Breaches" 
         value={highRiskCount}
         icon={<AlertTriangle className="h-5 w-5" />}
         description="Risk score > 1500"
@@ -49,7 +49,7 @@ export const StatsSection = () => {
           data.length > filteredData.length 
             ? {
                 value: Math.round((highRiskCount / filteredData.length) * 100),
-                label: "of total activities",
+                label: "of total breaches",
                 isUpward: true
               }
             : undefined

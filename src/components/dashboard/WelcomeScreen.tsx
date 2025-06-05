@@ -11,7 +11,7 @@ const WelcomeScreen = () => {
         </CardHeader>
         <CardContent>
           <p className="text-center text-muted-foreground mb-8">
-            To get started, please upload your activity data CSV file below.
+            To get started, please upload your breach data CSV file below.
           </p>
           <DataUploader />
         </CardContent>
