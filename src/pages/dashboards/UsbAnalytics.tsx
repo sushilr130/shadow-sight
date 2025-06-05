@@ -145,6 +145,13 @@ const UsbAnalyticsContent = () => {
     }
   };
 
+  const titles = [
+  'USB Data Classification',
+  'USB File Types',
+  'Sensitive Data in USB Transfers'
+];
+
+
   return (
     <div className="space-y-8">
       {renderActiveChart()}
@@ -152,30 +159,25 @@ const UsbAnalyticsContent = () => {
       <Pagination className="mt-8">
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious 
-              onClick={() => handlePageChange(Math.max(1, activePage - 1))}
-              className={activePage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-            />
+            <button
+              onClick={() => handlePageChange(activePage - 1)}
+              disabled={activePage === 1}
+              className={`cursor-pointer px-3 py-2 rounded ${activePage === 1 ? 'opacity-50 pointer-events-none' : 'hover:bg-gray-200'}`}
+            >
+              ← {titles[activePage - 2]}
+            </button>
           </PaginationItem>
-          
-          {[1, 2, 3].map((page) => (
-            <PaginationItem key={page}>
-              <PaginationLink
-                onClick={() => handlePageChange(page)}
-                isActive={activePage === page}
-                className="cursor-pointer"
-              >
-                {page}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-          
+
           <PaginationItem>
-            <PaginationNext 
-              onClick={() => handlePageChange(Math.min(3, activePage + 1))}
-              className={activePage === 3 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-            />
+            <button
+              onClick={() => handlePageChange(activePage + 1)}
+              disabled={activePage === 3}
+              className={`cursor-pointer px-3 py-2 rounded ${activePage === 3 ? 'opacity-50 pointer-events-none' : 'hover:bg-gray-200'}`}
+            >
+              {titles[activePage] } →
+            </button>
           </PaginationItem>
+
         </PaginationContent>
       </Pagination>
     </div>
