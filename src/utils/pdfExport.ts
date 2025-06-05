@@ -12,7 +12,7 @@ export interface ExportOptions {
 export const exportToPDF = async (options: ExportOptions = {}) => {
   // Default options
   const {
-    title = 'Activity Dashboard Report',
+    title = 'Breach Dashboard Report',
     subtitle = 'Generated from ShadowSight',
     includeTimestamp = true,
   } = options;

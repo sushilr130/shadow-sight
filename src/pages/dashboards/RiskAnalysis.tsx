@@ -75,7 +75,7 @@ const RiskAnalysisContent = () => {
           <Card>
             <CardHeader>
               <CardTitle>Risk Score Distribution</CardTitle>
-              <CardDescription>Distribution of activities by risk score band</CardDescription>
+              <CardDescription>Distribution of breaches by risk score band</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-80">
@@ -86,7 +86,7 @@ const RiskAnalysisContent = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="count" fill="#8884d8" name="Activities" />
+                    <Bar dataKey="count" fill="#8884d8" name="Breaches" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

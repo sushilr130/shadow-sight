@@ -76,7 +76,7 @@ const UsbAnalyticsContent = () => {
           <Card>
             <CardHeader>
               <CardTitle>USB Data Classification</CardTitle>
-              <CardDescription>Data classification for USB device activities</CardDescription>
+              <CardDescription>Data classification for USB device breaches</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-80">

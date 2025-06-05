@@ -45,7 +45,7 @@ export const ActivityByTimeChart = () => {
             tick={{ fontSize: 12 }}
           />
           <Tooltip
-            formatter={(value) => [`${value} Activities`, 'Count']}
+            formatter={(value) => [`${value} Breaches`, 'Count']}
             labelFormatter={(label) => `Time: ${label}`}
           />
           <Bar 

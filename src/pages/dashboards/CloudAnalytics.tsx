@@ -84,7 +84,7 @@ const CloudAnalyticsContent = () => {
           <Card id="chart-data-classification" className="card">
             <CardHeader>
               <CardTitle className="card-title">Cloud Data Classification</CardTitle>
-              <CardDescription className="card-description">Data classification for cloud service activities</CardDescription>
+              <CardDescription className="card-description">Data classification for cloud service breaches</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-96">

@@ -74,7 +74,7 @@ const EmailAnalyticsContent = () => {
           <Card>
             <CardHeader>
               <CardTitle>Breach Counts</CardTitle>
-              <CardDescription>Number of email activities vs total activities</CardDescription>
+              <CardDescription>Number of email breaches vs total breaches</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-80">

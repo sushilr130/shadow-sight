@@ -25,8 +25,8 @@ const Index = () => {
   }, [navigate]);
 
   return (
-    <DashboardTemplate title="Activity Dashboard">
-      <div className={`${mounted ? 'animate-fade-in' : 'opacity-0'}`}>
+    <DashboardTemplate title="Breach Dashboard">
+      <div className={`${mounted? 'animate-fade-in' : 'opacity-0'}`}>
         <Dashboard />
       </div>
     </DashboardTemplate>

@@ -92,7 +92,7 @@ const ComplianceReportsContent = () => {
           <Card>
             <CardHeader>
               <CardTitle>Data Classification Overview</CardTitle>
-              <CardDescription>Distribution of activities by data classification</CardDescription>
+              <CardDescription>Distribution of breaches by data classification</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-80">
@@ -115,7 +115,7 @@ const ComplianceReportsContent = () => {
           <Card>
             <CardHeader>
               <CardTitle>File Types Overview</CardTitle>
-              <CardDescription>Distribution of activities by file types</CardDescription>
+              <CardDescription>Distribution of breaches by file types</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-80">
@@ -138,7 +138,7 @@ const ComplianceReportsContent = () => {
           <Card>
             <CardHeader>
               <CardTitle>Sensitive Data Overview</CardTitle>
-              <CardDescription>Distribution of activities by sensitive data type</CardDescription>
+              <CardDescription>Distribution of breaches by sensitive data type</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-80">
@@ -161,7 +161,7 @@ const ComplianceReportsContent = () => {
           <Card>
             <CardHeader>
               <CardTitle>Breach Types</CardTitle>
-              <CardDescription>Count of email, USB, and cloud activities</CardDescription>
+              <CardDescription>Count of email, USB, and cloud breaches</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-80">

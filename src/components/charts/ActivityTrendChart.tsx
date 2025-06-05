@@ -45,7 +45,7 @@ export const ActivityTrendChart = () => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h3 className="text-lg font-medium">Activity Trends</h3>
+        <h3 className="text-lg font-medium">Breach Trends</h3>
         <ToggleGroup type="single" value={chartType} onValueChange={(value) => value && setChartType(value as 'line' | 'area')}>
           <ToggleGroupItem value="line" aria-label="Line Chart">
             <LineChartIcon className="h-4 w-4" />

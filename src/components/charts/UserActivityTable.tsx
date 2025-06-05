@@ -41,7 +41,7 @@ export const UserActivityTable = () => {
   if (filteredData.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-64 border border-border rounded-lg p-6">
-        <p className="text-muted-foreground">No data available for user activities</p>
+        <p className="text-muted-foreground">No data available for user breaches</p>
       </div>
     );
   }
@@ -52,7 +52,7 @@ export const UserActivityTable = () => {
         <thead>
           <tr className="bg-muted/50">
             <th className="px-4 py-3 text-left font-medium text-muted-foreground">User</th>
-            <th className="px-4 py-3 text-left font-medium text-muted-foreground">Activities</th>
+            <th className="px-4 py-3 text-left font-medium text-muted-foreground">Breaches</th>
             <th className="px-4 py-3 text-left font-medium text-muted-foreground">Avg. Risk</th>
             <th className="px-4 py-3 text-left font-medium text-muted-foreground">High Risk</th>
             <th className="px-4 py-3 text-left font-medium text-muted-foreground"></th>
