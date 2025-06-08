@@ -31,3 +31,8 @@ This project is built with .
 - React
 - shadcn-ui
 - Tailwind CSS
+
+## Acknowledgement
+This application was developed with the assistance of artificial intelligence tools including lovable.dev and chatGPT. While all reasonable efforts have been made to validate the originality and integrity of the codebase, AI-generated content may inadvertently resemble or reproduce existing copyrighted material. 
+The developer(s) do not guarantee that all AI-assisted outputs are free from third-party intellectual property claims. Users and contributors are advised to perform their own due diligence before reusing or redistributing any part of this application. 
+Use of this application constitutes acknowledgement of this risk. 
