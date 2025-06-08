@@ -1,3 +1,5 @@
+process.env.ROLLUP_NO_BINARY = '1';
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
